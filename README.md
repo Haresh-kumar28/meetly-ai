@@ -1,76 +1,62 @@
-# Meetly 🎙️
+# Meetly AI Intelligence
 
-**Meetly** is an AI-powered meeting assistant that transforms meeting audio into transcripts, concise summaries, key decisions, and actionable tasks.
+A polished evolution of Meetly: meeting processing, cross-meeting memory/RAG workspace, live AI copilot UI, action center, and PDF meeting reports.
 
-## ✨ Features
+## What is included
+- **Dashboard** — latest intelligence, KPIs and memory overview.
+- **New Meeting** — connects to the existing Whisper + Groq processing pipeline.
+- **Live Copilot** — real-time meeting workspace prototype with transcript feed, context retrieval and live signals.
+- **Knowledge / RAG** — section for indexed documents, previous meetings and project memory.
+- **Meetings** — meeting history and detailed intelligence view.
+- **Action Center** — task tracking with completion state.
+- **Reports** — browser-side polished PDF generation using jsPDF.
+- **Google Meet ready architecture** — UI and environment placeholders for the future Add-on + Media API integration.
 
-- 🎙️ Upload meeting audio files
-- 📝 Automatic speech-to-text transcription
-- 🤖 AI-powered meeting analysis
-- 📋 Generate concise meeting summaries
-- 💡 Extract important decisions
-- ✅ Generate actionable tasks
-- 👤 Identify task assignees
-- 📅 Extract task deadlines
-- 💾 Store meetings and tasks in MongoDB
-- 🔄 CRUD operations for meetings and tasks
-
-## 🔄 How It Works
-
-Meeting Audio  
-↓  
-Speech-to-Text Transcription  
-↓  
-AI Analysis  
-↓  
-Summary + Key Decisions + Action Items  
-↓  
-Save to MongoDB  
-↓  
-Display Results in React Frontend
-
-## 🛠️ Tech Stack
-
+## Run
 ### Frontend
-- React.js
-- Vite
-- CSS
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open the Vite URL shown in the terminal.
 
 ### Backend
-- Node.js
-- Express.js
-- REST APIs
-- Multer
+```bash
+cd backend
+npm install
+copy .env.example .env
+```
+Add your Groq key and (optionally) MongoDB URI, then:
+```bash
+npm run dev
+```
 
-### AI & Speech Processing
-- Groq LLM
-- Whisper Speech-to-Text
+The frontend expects the backend at `http://localhost:5000`. To change it, create `frontend/.env`:
+```env
+VITE_API_URL=http://localhost:5000
+```
 
-### Database
-- MongoDB Atlas
-- Mongoose
+## Google Meet roadmap
+The current live copilot is connector-ready but does not pretend to be a production Google Meet capture integration. A production implementation should add Google OAuth, a Google Meet Add-on, Workspace Events, and the Meet Media API where eligible. Keep raw media permissions and participant consent requirements explicit.
 
-## 📁 Project Structure
-
+## Architecture
 ```text
-meetly-ai/
-├── backend/
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── server.js
-│   └── package.json
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   └── main.jsx
-│   └── package.json
-│
-├── .gitignore
-└── README.md
+Google Meet / Audio Upload
+          ↓
+ Speech-to-Text (Whisper)
+          ↓
+ Transcript chunks
+          ↓
+ ┌────────┴─────────┐
+ │                  │
+RAG memory       AI analysis
+ │                  │
+ └────────┬─────────┘
+          ↓
+Summary · Decisions · Tasks
+          ↓
+ MongoDB / Workspace Memory
+          ↓
+React Dashboard + Live Copilot + PDF Reports
+```

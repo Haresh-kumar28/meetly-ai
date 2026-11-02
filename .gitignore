@@ -1,19 +1,14 @@
-# Dependencies
-node_modules/
-backend/node_modules/
-frontend/node_modules/
-
-# Environment variables
+﻿node_modules/
 .env
-backend/.env
-frontend/.env
+.env.*
+!.env.example
 
-# Uploaded audio
-backend/uploads/*
+**/uploads/*
+!**/uploads/.gitkeep
 
-# Build files
 dist/
-frontend/dist/
+build/
+.DS_Store
 branch_structure.json
 temp_auto_push.bat
 temp_interactive_push.bat
